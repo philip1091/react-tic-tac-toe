@@ -5,15 +5,16 @@ const initialGameBoad = [
   [null, null, null],
 ];
 
-function GameBoard() {
+function GameBoard({ activePlayer, onPlayerChange }) {
   const [gameBoard, setGameBoard] = useState(initialGameBoad);
 
   function handleCellClick(rowIndex, colIndex) {
     setGameBoard((prevBoard) => {
       const updatedBoard = [...prevBoard.map((innerArray) => [...innerArray])];
-      updatedBoard[rowIndex][colIndex] = "X";
+      updatedBoard[rowIndex][colIndex] = activePlayer;
       return updatedBoard;
     });
+    onPlayerChange();
   }
 
   return (
