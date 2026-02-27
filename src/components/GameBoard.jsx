@@ -25,6 +25,7 @@ function GameBoard({ onPlayerChange, turns }) {
                     onClick={() => onPlayerChange(rowIndex, colIndex)}
                     key={colIndex}
                     className="board-cell"
+                    disabled={playerSymbol !== null}
                   >
                     {playerSymbol}
                   </button>
