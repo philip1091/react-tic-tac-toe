@@ -1,21 +1,7 @@
-const initialGameBoad = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
-
-function GameBoard({ onPlayerChange, turns }) {
-  let gameBoard = initialGameBoad;
-
-  for (let turn of turns) {
-    const { square, player } = turn;
-    const { row, col } = square;
-    gameBoard[row][col] = player;
-  }
-
+function GameBoard({ onPlayerChange, board }) {
   return (
     <ol id="game-board">
-      {gameBoard.map((row, rowIndex) => {
+      {board.map((row, rowIndex) => {
         return (
           <li key={rowIndex} className="board-row">
             <ol>
