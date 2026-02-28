@@ -2,6 +2,13 @@ import { useState } from "react";
 import Player from "./components/Player";
 import GameBoard from "./components/GameBoard";
 import Log from "./components/Log";
+import { WINNING_COMBINATIONS } from "./assets/winning-combinations.js";
+
+const initialGameBoad = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
 
 function deriveActivePlayer(gameTurns) {
   let currentPlayer = "X";
@@ -18,10 +25,36 @@ function App() {
 
   const activePlayer = deriveActivePlayer(gameTurns);
 
+  let gameBoard = initialGameBoad;
+
+  for (let turn of gameTurns) {
+    const { square, player } = turn;
+    const { row, col } = square;
+    gameBoard[row][col] = player;
+  }
+
+  let winner;
+
+  for (const combination of WINNING_COMBINATIONS) {
+    const firstSquareSymbol =
+      gameBoard[combination[0].row][combination[0].column];
+    const secondSquareSymbol =
+      gameBoard[combination[1].row][combination[1].column];
+    const thirdSquareSymbol =
+      gameBoard[combination[2].row][combination[2].column];
+
+    if (
+      firstSquareSymbol &&
+      firstSquareSymbol === secondSquareSymbol &&
+      firstSquareSymbol === thirdSquareSymbol
+    ) {
+      winner = firstSquareSymbol;
+    }
+  }
+
   function handlePlayerChange(rowIndex, colIndex) {
     setGameTurns((prevTurns) => {
       const currentPlayer = deriveActivePlayer(prevTurns);
-
       const updatedTurns = [
         {
           square: {
@@ -51,7 +84,8 @@ function App() {
             isActive={activePlayer === "O"}
           />
         </ol>
-        <GameBoard turns={gameTurns} onPlayerChange={handlePlayerChange} />
+        {winner && <p className="winner">Player {winner} wins!</p>}
+        <GameBoard board={gameBoard} onPlayerChange={handlePlayerChange} />
       </div>
       <Log gameTurns={gameTurns} />
     </main>
