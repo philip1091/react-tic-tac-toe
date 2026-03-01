@@ -27,15 +27,7 @@ function Player({ initialName, initialSymbol, isActive, onChangeName }) {
     playerName = (
       <input type="text" value={name} required onChange={handleNameChange} />
     );
-    playerSymbol = (
-      <input
-        className="symbol-input"
-        type="text"
-        value={symbol}
-        required
-        onChange={handleSymbolChange}
-      />
-    );
+
     btnCaption = "Save";
   }
 
